@@ -6,15 +6,15 @@
 int main()
 {
 	int choice, accountNumber[15];
-	float investQuantity[15];
+	float investQuantity[15], value;
 	char investCode[15];
 
 	char pass[15] = "@dm1n", user[15] = "admin";
 	char username[15], password[15];
 	int n = 0;
-	int a,b, order;
+	int a,b, order, vIncome, investSelect;
 
-	while(n<=3) //While Loop For Login Screen.
+	while(n<3) //While Loop For Login Screen.
     {
       //Beginning Of The Program.
       system("clear");
@@ -34,12 +34,13 @@ int main()
       b=strcmp(password,pass);
       if(a==0&&b==0)
       {
-        printf("\nYou have been successfully logged in.");
+        printf("You have been successfully logged in.\n");
+        system("pause");
         break;
       }
       else
       {
-      	printf("\nWrong PASSWORD and/or USER ID entered. Now you have % d more chance/s.",3-n);
+      	printf("Wrong PASSWORD and/or USER ID entered. Now you have % d more chance/s.\n",3-n);
       }
       n++;
    }
@@ -71,11 +72,11 @@ int main()
 				printf(" =================================================================\n");
 		   		printf("|             SWISS INVESTMENT ORDER MANAGEMENT SYSTEM            |\n");
 		      	printf(" =================================================================\n");
-				printf("       |                 PREPARE INVESTMENT ORDER                 |\n");
+				printf("       |              PREPARE INVESTMENT ORDER             |\n");
 				printf("        ===================================================\n");
 				printf("\n");
 				while(1){
-					printf("Number Of Orders To Be Processed? (Max 15 Orders) \n");
+					printf("Number Of Orders To Be Processed? (Max 15 Orders) ");
             		scanf("%d", &order);
             		if(order<16){
             			for(int x = 0;x<order;x++){
@@ -89,8 +90,32 @@ int main()
 		                    printf("Enter Account Number: ");
 		                    scanf("%d", &accountNumber[x]);
 		                    printf("\n");
-		                    printf("Enter Investment Code: ");
-		                    scanf("%s", &investCode[x]);
+		                    printf("Investment Type");
+		                    printf("\n");
+		                    printf("1. Fixed Income (Minumun Units: 1000)\n");
+		                    printf("2. Pooled Stock (Minumun Units: 4500)\n");
+		                    printf("3. Variable Income (Minumun Units: 2400)\n");
+		                    printf("\n");
+		                    printf("Select Investment Type: ");
+		                    scanf("%d", &investSelect);
+		                    switch(investSelect)
+		                    {
+		                    case 1:
+		                        strcpy(&investCode[x], "F");
+		                        value = 52.69;
+		                        break;
+		                    case 2:
+		                        strcpy(&investCode[x], "S");
+		                        value = 59.24;
+		                        break;
+		                    case 3:
+		                        strcpy(&investCode[x], "X");
+		                        value = 125.72;
+		                        break;
+		                    default:
+		                        printf("Invalid Selection\n");
+		                        break;
+		                    }
 		                    printf("Enter Investment Quantity: ");
 		                    scanf("%f", &investQuantity[x]);
             			}
@@ -99,10 +124,24 @@ int main()
             		else{
             			printf("Number Of Records Exceeded (Max 15)");
             		}
+            		break;
 				}
 				break;
 			case 2:
-				printf("Display\n");
+				system("clear");
+				printf(" =================================================================\n");
+		   		printf("|             SWISS INVESTMENT ORDER MANAGEMENT SYSTEM            |\n");
+		      	printf(" =================================================================\n");
+				printf("       |                 DISPLAY INVESTMENT ORDER           |\n");
+				printf("        ===================================================\n");
+				printf("\n");
+				for(int i = 0; i<16;i++){
+					printf("********************\n");
+					printf("Account Number: %d", accountNumber[i]);
+					printf("Investment Code: %c", investCode[i]);
+					printf("Quantity: %f", investQuantity[i]);
+				}
+				system("pause");
 				break;
 			case 3:
 				printf("Search\n");
@@ -111,7 +150,7 @@ int main()
 				printf("Exit\n");
 				break;
 			default:
-				printf("Invalid\n");
+				printf("Invalid Selection\n");
 			}
     }
 
