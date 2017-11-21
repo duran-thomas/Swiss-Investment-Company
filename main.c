@@ -1,23 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define null '\0'
 
 
 int main()
 {
-	int choice, accountNumber[15];
-	float investQuantity[15], value;
-	char investCode[15];
+	int choice, accountNumber[15] = {0};
+	int investQuantity[15] = {0};
+	char investCode[15] = {""};
+	float ttlCost[15] = {0}, total = 0;
 
-	char pass[15] = "@dm1n", user[15] = "admin";
+	char pass[15] = "@dm1n", user[15] = "admin", invst;
 	char username[15], password[15];
 	int n = 0;
-	int a,b, order, vIncome, investSelect;
+	int a,b,x,i, order, investSelect, search, qnty;
+	int fiCount = 0, psCount = 0, viCount = 0;
+	float fiOrders = 0, psOrders = 0, value;
 
 	while(n<3) //While Loop For Login Screen.
     {
       //Beginning Of The Program.
-      system("clear");
+      system("cls");
       printf(" =================================================================\n");
       printf("|             SWISS INVESTMENT ORDER MANAGEMENT SYSTEM            |\n");
       printf(" =================================================================\n");
@@ -50,7 +54,7 @@ int main()
     }
 
     while(1){
-    	system("clear");
+    	system("cls");
 		printf(" =================================================================\n");
    		printf("|             SWISS INVESTMENT ORDER MANAGEMENT SYSTEM            |\n");
       	printf(" =================================================================\n");
@@ -68,7 +72,7 @@ int main()
 		scanf("%d", &choice);
 		switch(choice){
 			case 1:
-				system("clear");
+				system("cls");
 				printf(" =================================================================\n");
 		   		printf("|             SWISS INVESTMENT ORDER MANAGEMENT SYSTEM            |\n");
 		      	printf(" =================================================================\n");
@@ -78,9 +82,10 @@ int main()
 				while(1){
 					printf("Number Of Orders To Be Processed? (Max 15 Orders) ");
             		scanf("%d", &order);
-            		if(order<16){
-            			for(int x = 0;x<order;x++){
-            				system("clear");
+            		if(order<15){
+            		    x = 0;
+            			for(x;x<order;x++){
+            				system("cls");
 		                    printf(" =================================================================\n");
 					   		printf("|             SWISS INVESTMENT ORDER MANAGEMENT SYSTEM            |\n");
 					      	printf(" =================================================================\n");
@@ -92,33 +97,41 @@ int main()
 		                    printf("\n");
 		                    printf("Investment Type");
 		                    printf("\n");
-		                    printf("1. Fixed Income (Minumun Units: 1000)\n");
-		                    printf("2. Pooled Stock (Minumun Units: 4500)\n");
-		                    printf("3. Variable Income (Minumun Units: 2400)\n");
+		                    printf("1. Fixed Income (Minimum Units: 1000)\n");
+		                    printf("2. Pooled Stock (Minimum Units: 4500)\n");
+		                    printf("3. Variable Income (Minimum Units: 2400)\n");
 		                    printf("\n");
 		                    printf("Select Investment Type: ");
 		                    scanf("%d", &investSelect);
+
 		                    switch(investSelect)
 		                    {
 		                    case 1:
 		                        strcpy(&investCode[x], "F");
 		                        value = 52.69;
+		                        fiCount++;
 		                        break;
 		                    case 2:
 		                        strcpy(&investCode[x], "S");
 		                        value = 59.24;
+		                        psCount++;
 		                        break;
 		                    case 3:
 		                        strcpy(&investCode[x], "X");
 		                        value = 125.72;
+		                        viCount++;
 		                        break;
 		                    default:
 		                        printf("Invalid Selection\n");
 		                        break;
 		                    }
 		                    printf("Enter Investment Quantity: ");
-		                    scanf("%f", &investQuantity[x]);
+		                    scanf("%d", &investQuantity[x]);
+
+		                    ttlCost[x] = investQuantity[x]*value;
+
             			}
+            			x++;
             		break;
             		}
             		else{
@@ -128,31 +141,96 @@ int main()
 				}
 				break;
 			case 2:
-				system("clear");
+				system("cls");
 				printf(" =================================================================\n");
 		   		printf("|             SWISS INVESTMENT ORDER MANAGEMENT SYSTEM            |\n");
 		      	printf(" =================================================================\n");
 				printf("       |                 DISPLAY INVESTMENT ORDER           |\n");
 				printf("        ===================================================\n");
 				printf("\n");
-				for(int i = 0; i<16;i++){
-					printf("********************\n");
-					printf("Account Number: %d", accountNumber[i]);
-					printf("Investment Code: %c", investCode[i]);
-					printf("Quantity: %f", investQuantity[i]);
+				for(i = 0; i<15;i++){
+                    if(accountNumber[i] != null && investCode[i] != null && investQuantity[i] != null){
+                        printf("********************\n");
+                        printf("Account Number: %d\n", accountNumber[i]);
+                        printf("Investment Code: %c\n", investCode[i]);
+                        printf("Quantity: %.2f\n", investQuantity[i]);
+                        printf("Order Cost: $%.2f", investQuantity[i]*value);
+                        printf("\n");
+                    }
 				}
+				printf("\n");
+				printf("Total Number Of Orders By Category \n");
+				printf("*********************\n");
+				printf("Fixed Income: %d\n", fiCount);
+				printf("Pooled Stock: %d\n", psCount);
+				printf("Variable Income: %d\n", viCount);
+				printf("Overall Totals\n");
+				printf("*********************\n");
+				printf("Total Number Of Orders: %d\n", fiCount+psCount+viCount);
+
+				for(x=0;x<15;x++){
+                    total = total + ttlCost[x];
+				}
+
+				printf("Total Cost Of Orders: %.2f\n", total);
 				system("pause");
 				break;
 			case 3:
-				printf("Search\n");
+				system("cls");
+				printf(" =================================================================\n");
+		   		printf("|             SWISS INVESTMENT ORDER MANAGEMENT SYSTEM            |\n");
+		      	printf(" =================================================================\n");
+				printf("       |                 UPDATE INVESTMENT ORDER           |\n");
+				printf("        ===================================================\n");
+				printf("\n");
+				printf("Enter Account Number You Wish To Search For: ");
+				scanf("%d", &search);
+                for(x=0;x<15;x++){
+                    if(accountNumber[x] == search){
+                        printf("********************\n");
+                        printf("Account Number: %d\n", accountNumber[x]);
+                        printf("Investment Code: %c\n", investCode[x]);
+                        printf("Quantity: %.2f\n", investQuantity[x]);
+                        printf("********************\n");
+                        printf("\n");
+                        printf("What Would You Like To Change?\n");
+                        printf("1. Investment Code\n");
+                        printf("2. Quantity\n");
+                        printf("Select Option: ");
+                        scanf("%d", &choice);
+                        switch(choice){
+                        case 1:
+                            printf("Enter New Investment Code: ");
+                            scanf("%s", &invst);
+                            investCode[x] = invst;
+                            break;
+                        case 2:
+                            printf("Enter New Investment Quantity: ");
+                            scanf("%d", &qnty);
+                            investQuantity[x]= qnty;
+                            break;
+                        default:
+                            printf("Invalid Selection");
+                            break;
+                        }
+                        printf("Updated Values\n");
+                        printf("********************\n");
+                        printf("Account Number: %d\n", accountNumber[x]);
+                        printf("Investment Code: %c\n", investCode[x]);
+                        printf("Quantity: %.2f\n", investQuantity[x]);
+                        printf("********************\n");
+                    }
+
+                }
+                system("pause");
 				break;
 			case 4:
-				printf("Exit\n");
+				printf("Exiting.......");
+				exit(0);
 				break;
 			default:
 				printf("Invalid Selection\n");
 			}
     }
-
 	return 0;
 }
