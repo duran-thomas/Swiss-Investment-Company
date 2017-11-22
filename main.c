@@ -83,8 +83,8 @@ int main()
 					printf("Number Of Orders To Be Processed? (Max 15 Orders) ");
             		scanf("%d", &order);
             		if(order<15){
-            		    x = 0;
-            			for(x;x<order;x++){
+            		    
+            			for(x=0;x<order;x++){
             				system("cls");
 		                    printf(" =================================================================\n");
 					   		printf("|             SWISS INVESTMENT ORDER MANAGEMENT SYSTEM            |\n");
@@ -131,7 +131,6 @@ int main()
 		                    ttlCost[x] = investQuantity[x]*value;
 
             			}
-            			x++;
             		break;
             		}
             		else{
@@ -221,13 +220,14 @@ int main()
                             }
                         }
                         else{
+                        	printf("No Record Found\n");
                             break;
                         }
                         printf("Updated Values\n");
                         printf("********************\n");
                         printf("Account Number: %d\n", accountNumber[x]);
                         printf("Investment Code: %c\n", investCode[x]);
-                        printf("Quantity: %.2f\n", investQuantity[x]);
+                        printf("Quantity: %d\n", investQuantity[x]);
                         printf("********************\n");
                     }
 
