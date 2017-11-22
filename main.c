@@ -11,7 +11,7 @@ int main()
 	char investCode[15] = {""};
 	float ttlCost[15] = {0}, total = 0;
 
-	char pass[15] = "@dm1n", user[15] = "admin", invst;
+	char pass[15] = "@dm1n", user[15] = "admin", invst, select;
 	char username[15], password[15];
 	int n = 0;
 	int a,b,x,i, order, investSelect, search, qnty;
@@ -153,7 +153,7 @@ int main()
                         printf("********************\n");
                         printf("Account Number: %d\n", accountNumber[i]);
                         printf("Investment Code: %c\n", investCode[i]);
-                        printf("Quantity: %.2f\n", investQuantity[i]);
+                        printf("Quantity: %d\n", investQuantity[i]);
                         printf("Order Cost: $%.2f", investQuantity[i]*value);
                         printf("\n");
                     }
@@ -190,27 +190,37 @@ int main()
                         printf("********************\n");
                         printf("Account Number: %d\n", accountNumber[x]);
                         printf("Investment Code: %c\n", investCode[x]);
-                        printf("Quantity: %.2f\n", investQuantity[x]);
+                        printf("Quantity: %d\n", investQuantity[x]);
                         printf("********************\n");
                         printf("\n");
-                        printf("What Would You Like To Change?\n");
-                        printf("1. Investment Code\n");
-                        printf("2. Quantity\n");
-                        printf("Select Option: ");
-                        scanf("%d", &choice);
-                        switch(choice){
-                        case 1:
-                            printf("Enter New Investment Code: ");
-                            scanf("%s", &invst);
-                            investCode[x] = invst;
-                            break;
-                        case 2:
-                            printf("Enter New Investment Quantity: ");
-                            scanf("%d", &qnty);
-                            investQuantity[x]= qnty;
-                            break;
-                        default:
-                            printf("Invalid Selection");
+                        printf("Would You Like To Edit This Order? (Y/N) ");
+                        scanf("%s", &select);
+                        if(select == 'Y' || select == 'y'){
+                            printf("What Would You Like To Change?\n");
+                            printf("1. Investment Code\n");
+                            printf("2. Quantity\n");
+                            printf("Select Option: ");
+                            scanf("%d", &choice);
+                            switch(choice){
+                            case 1:
+                                printf("For Fixed Asset: F\n");
+                                printf("For Pooled Stock: S\n");
+                                printf("For Variable Income: X\n");
+                                printf("Enter New Investment Code: ");
+                                scanf("%s", &invst);
+                                investCode[x] = invst;
+                                break;
+                            case 2:
+                                printf("Enter New Investment Quantity: ");
+                                scanf("%d", &qnty);
+                                investQuantity[x]= qnty;
+                                break;
+                            default:
+                                printf("Invalid Selection");
+                                break;
+                            }
+                        }
+                        else{
                             break;
                         }
                         printf("Updated Values\n");
