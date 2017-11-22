@@ -6,11 +6,11 @@ unsuccessful attempts, the user should be locked out.
 Upon successful entry, provide an attractive menu to the user with basic menu options such as
 the one below:
 
-INVESTMENT ORDER MANAGEMENT SYSTEM
- Prepare Investment Orders
- Display Investment Orders
- Search/Edit Investment Orders
- Exit
+#INVESTMENT ORDER MANAGEMENT SYSTEM
+  Prepare Investment Orders
+  Display Investment Orders
+  Search/Edit Investment Orders
+  Exit
 
 The requirements for each menu option are described below. Use attractive layouts for the
 display of information. Please note that the menu should be re-displayed on the screen after
