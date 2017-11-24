@@ -11,14 +11,14 @@ int main()
 	char investCode[15] = {""};
 	float ttlCost[15] = {0}, total = 0;
 
-	char pass[15] = "@dm1n", user[15] = "admin", invst, select;
-	char username[15], password[15];
-	int n = 0;
-	int a,b,x,i, order, investSelect, search, qnty;
+	char pass[15] = "@dm1n", invst, select;
+	char password[15];
+	int n = 1;
+	int a,b,x,i, order, investSelect, search, qnty, minQuantity;
 	int fiCount = 0, psCount = 0, viCount = 0;
 	float fiOrders = 0, psOrders = 0, value;
 
-	while(n<3) //While Loop For Login Screen.
+	while(1) //While Loop For Login Screen.
     {
       //Beginning Of The Program.
       system("cls");
@@ -29,14 +29,10 @@ int main()
       printf("        ===================================================\n");
       printf("                              (You have only three chances to enter)\n");
       printf("\n");
-      printf("USERNAME: ");
-      scanf("%s",username);
-      printf("\n");
-      printf("PASSWORD: ");
+      printf("Enter Password: ");
       scanf("%s",password);
-      a=strcmp(username,user);
-      b=strcmp(password,pass);
-      if(a==0&&b==0)
+      a=strcmp(password,pass);
+      if(a==0)
       {
         printf("You have been successfully logged in.\n");
         system("pause");
@@ -45,13 +41,15 @@ int main()
       else
       {
       	printf("Wrong PASSWORD and/or USER ID entered. Now you have % d more chance/s.\n",3-n);
+      	system("pause");
       }
       n++;
-   }
-   if(n==4){
-    	printf("\nYou can't log in.");
+      if(n==4){
+    	printf("You can't log in.\n");
     	exit(0);
     }
+   }
+
 
     while(1){
     	system("cls");
@@ -83,8 +81,8 @@ int main()
 					printf("Number Of Orders To Be Processed? (Max 15 Orders) ");
             		scanf("%d", &order);
             		if(order<15){
-            		    
-            			for(x=0;x<order;x++){
+            		    x = 0;
+            			for(x;x<order;x++){
             				system("cls");
 		                    printf(" =================================================================\n");
 					   		printf("|             SWISS INVESTMENT ORDER MANAGEMENT SYSTEM            |\n");
@@ -109,16 +107,19 @@ int main()
 		                    case 1:
 		                        strcpy(&investCode[x], "F");
 		                        value = 52.69;
+		                        minQuantity = 1000;
 		                        fiCount++;
 		                        break;
 		                    case 2:
 		                        strcpy(&investCode[x], "S");
 		                        value = 59.24;
+		                        minQuantity = 4500;
 		                        psCount++;
 		                        break;
 		                    case 3:
 		                        strcpy(&investCode[x], "X");
 		                        value = 125.72;
+		                        minQuantity = 2400;
 		                        viCount++;
 		                        break;
 		                    default:
@@ -127,10 +128,18 @@ int main()
 		                    }
 		                    printf("Enter Investment Quantity: ");
 		                    scanf("%d", &investQuantity[x]);
-
+                            while(investQuantity[x]<minQuantity){
+                                printf("Invalid Amount\n");
+                                printf("Please Enter Investment Quantity: ");
+                                scanf("%d", &investQuantity[x]);
+                                if(investQuantity[x]>=minQuantity){
+                                    break;
+                                }
+                            }
 		                    ttlCost[x] = investQuantity[x]*value;
 
             			}
+            			x++;
             		break;
             		}
             		else{
@@ -220,14 +229,13 @@ int main()
                             }
                         }
                         else{
-                        	printf("No Record Found\n");
                             break;
                         }
                         printf("Updated Values\n");
                         printf("********************\n");
                         printf("Account Number: %d\n", accountNumber[x]);
                         printf("Investment Code: %c\n", investCode[x]);
-                        printf("Quantity: %d\n", investQuantity[x]);
+                        printf("Quantity: %.2f\n", investQuantity[x]);
                         printf("********************\n");
                     }
 
